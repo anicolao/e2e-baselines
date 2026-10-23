@@ -1,0 +1,29 @@
+name: Publish verified runner images
+on:
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: Successful seed/oracle run in anicolao/e2e
+        type: string
+        required: true
+concurrency:
+  group: baseline-publisher
+  cancel-in-progress: false
+permissions:
+  contents: read
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Validate, publish, and audit accepted PNGs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_RUN_ID: ${{ inputs.source_run_id }}
+        run: python3 scripts/publish-seed.py
