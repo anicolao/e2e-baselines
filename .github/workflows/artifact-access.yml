@@ -1,0 +1,23 @@
+name: Check public artifact access
+on:
+  workflow_dispatch:
+    inputs:
+      artifact_id:
+        description: Analysis artifact ID in anicolao/e2e
+        type: string
+        required: true
+permissions:
+  contents: read
+  actions: read
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Read a public artifact using this repository's token
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_ID: ${{ inputs.artifact_id }}
+        run: |
+          [[ "$ARTIFACT_ID" =~ ^[0-9]+$ ]]
+          gh api "repos/anicolao/e2e/actions/artifacts/$ARTIFACT_ID/zip" > probe.zip
+          unzip -l probe.zip
