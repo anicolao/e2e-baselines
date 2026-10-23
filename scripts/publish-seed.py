@@ -55,6 +55,7 @@ revision = run['head_sha']
 require(len(revision) == 40 and all(c in '0123456789abcdef' for c in revision), 'Invalid framework revision')
 manifest_bytes = public_bytes(f'https://raw.githubusercontent.com/{SOURCE}/{revision}/poc/pantheon/baselines.json')
 manifest = json.loads(manifest_bytes)
+source = json.loads(public_bytes(f'https://raw.githubusercontent.com/{SOURCE}/{revision}/poc/pantheon/source.json'))
 expected = {path: image for path, image in manifest['images'].items() if STORY in path and path.endswith('-linux.png')}
 require(len(expected) == 6, 'Expected six checkpoint captures')
 artifacts = api(f'repos/{SOURCE}/actions/runs/{RUN}/artifacts')['artifacts']
@@ -83,7 +84,7 @@ with tempfile.TemporaryDirectory() as temporary:
         require(report['stats']['expected'] == 3 and report['stats']['unexpected'] == 0 and report['stats']['skipped'] == 0 and report['stats']['flaky'] == 0 and not report['errors'], 'Source tests did not all pass')
         for row in rows:
             image = expected[row['baseline']]
-            require(row['matches'] and row['mode'] == 'seed' and row['sourceCommit'] == manifest['source']['commit'], 'Unverified capture')
+            require(row['matches'] and row['mode'] == 'seed' and row['sourceCommit'] == source['commit'], 'Unverified capture')
             data = read_member(PREFIX + 'objects/' + image['blobDigest'][7:] + '.png', image['byteLength'])
             require(len(data) == image['byteLength'] and digest(data) == image['blobDigest'], 'PNG integrity check failed')
             require(data[:8] == b'\x89PNG\r\n\x1a\n' and struct.unpack('>II', data[16:24]) == (image['width'], image['height']), 'Wrong PNG dimensions')
@@ -115,7 +116,7 @@ with tempfile.TemporaryDirectory() as temporary:
             restored = public_bytes(f'https://github.com/{STORE}/releases/download/{tag}/{key[7:]}.png')
             require(digest(restored) == key, 'Public PNG audit failed')
         require(digest(public_bytes(f'https://github.com/{STORE}/releases/download/{tag}/originals.tar.gz')) == digest(backup_bytes), 'Public backup audit failed')
-    receipt = {'schemaVersion': 1, 'sourceRun': run['html_url'], 'frameworkRevision': revision, 'sourceCommit': manifest['source']['commit'],
+    receipt = {'schemaVersion': 1, 'sourceRun': run['html_url'], 'frameworkRevision': revision, 'sourceCommit': source['commit'], 'baselineSourceCommit': manifest['source']['commit'],
                'manifestDigest': digest(manifest_bytes), 'createdAt': datetime.now(timezone.utc).isoformat(), 'references': 6,
                'uniqueImages': len(objects), 'newImages': len(missing), 'reusedImages': len(objects) - len(missing),
                'verifiedBytes': sum(len(data) for _, data in objects.values()), 'catalogParent': base,
