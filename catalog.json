@@ -1,1 +1,14 @@
-{"schemaVersion":1,"repository":"anicolao/e2e-baselines","images":{}}
+{
+  "schemaVersion": 1,
+  "repository": "anicolao/e2e-baselines",
+  "images": {
+    "sha256:944c46547bb181180761b0bf70c3740a79f15cb5e8b790abc512dc48d6ebe090": {
+      "blobDigest": "sha256:944c46547bb181180761b0bf70c3740a79f15cb5e8b790abc512dc48d6ebe090",
+      "byteLength": 92615,
+      "width": 393,
+      "height": 852,
+      "release": "png-smoke-001",
+      "assetId": 669002951
+    }
+  }
+}
