@@ -1,0 +1,15 @@
+{
+  "catalogParent": "40878acc985d551936ed0a3d9b0ed05ae2583182",
+  "createdAt": "2026-10-23T14:04:14.629255+00:00",
+  "frameworkRevision": "0d7de59d9c5e7dc24adc05b8bf9651056473b6bb",
+  "manifestDigest": "sha256:8778525bdcccd4540f0b4e4b3b647fb9a55427e76317b62cd68878d3c0cd6ff9",
+  "newImages": 6,
+  "references": 6,
+  "release": "https://github.com/anicolao/e2e-baselines/releases/tag/seed-39966058715",
+  "reusedImages": 0,
+  "schemaVersion": 1,
+  "sourceCommit": "dfc7f6307b61a8885be870e841d83895811257d1",
+  "sourceRun": "https://github.com/anicolao/e2e/actions/runs/39966058715",
+  "uniqueImages": 6,
+  "verifiedBytes": 34964389
+}
