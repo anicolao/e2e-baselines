@@ -1,0 +1,16 @@
+{
+  "baselineSourceCommit": "dfc7f6307b61a8885be870e841d83895811257d1",
+  "catalogParent": "2490a5183d02c11376e661e09de667520341dcac",
+  "createdAt": "2026-10-24T01:13:46.595342+00:00",
+  "frameworkRevision": "51e4518d657ad5f2dc570f5a6dad609e4de3c2c1",
+  "manifestDigest": "sha256:8778525bdcccd4540f0b4e4b3b647fb9a55427e76317b62cd68878d3c0cd6ff9",
+  "newImages": 0,
+  "references": 6,
+  "release": null,
+  "reusedImages": 6,
+  "schemaVersion": 1,
+  "sourceCommit": "b37e8cefef820dba74dfa2db202cfcd665ae5a8b",
+  "sourceRun": "https://github.com/anicolao/e2e/actions/runs/40048641574",
+  "uniqueImages": 6,
+  "verifiedBytes": 34964389
+}
